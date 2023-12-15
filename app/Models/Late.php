@@ -10,5 +10,10 @@ class Late extends Model
     use HasFactory;
 
     protected $guarded = ['id'];
+    
     protected $table = 'lates';
+
+    public function student(){
+        return $this->belongsTo(Student::class);
+    }
 }

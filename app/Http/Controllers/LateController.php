@@ -32,17 +32,38 @@ class LateController extends Controller
     {
         try {
             DB::beginTransaction();
-            $validator = Validator::make($request->all(),[
+            $validator = Validator::make($request->all(), [
                 'student_id' => 'required',
-                'date_time_late'=>'required',
-                'information'=>'required',
-                'bukti'=>'required',
+                'date_time_late' => 'required',
+                'information' => 'required',
+                'bukti' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
             ]);
 
-            if($validator->fails()){
+            if ($validator->fails()) {
                 return redirect()->back()->withErrors($validator->errors())->withInput($request->all());
             }
             $data = $validator->validated();
+
+            // if ($request->hasFile('bukti')) {
+            //     $image = $request->file('bukti');
+            //     $imageName = time() . '.' . $image->getClientOriginalExtension();
+            //     $image->storeAs('bukti_images', $imageName); 
+            //     $data['bukti'] = $imageName;
+            // }
+
+            $image = $request->file('bukti');
+            $imgName = time() . rand() . '.' . $image->extension();
+
+            if (!file_exists(public_path('/images/bukti_images' . $image->getClientOriginalName()))) {
+                $destinationPath = public_path('/images/bukti_images');
+
+                $image->move($destinationPath, $imgName);
+                $uploaded = $imgName;
+            } else {
+                $uploaded = $image->getClientOriginalName();
+            }
+
+            $data['bukti'] = $uploaded;
 
             Late::create($data);
             DB::commit();
@@ -57,7 +78,8 @@ class LateController extends Controller
     public function show($id)
     {
         $data['title'] = 'Detail Late';
-        $data['late'] = Late::find($id);
+        $data['student'] = Student::find($id);
+        $data['late'] = late::where('student_id', $id)->get();
         $data['page'] = 'late';
         return view('pages.late.show', $data);
     }
@@ -74,14 +96,14 @@ class LateController extends Controller
     {
         try {
             DB::beginTransaction();
-            $validator = Validator::make($request->all(),[
+            $validator = Validator::make($request->all(), [
                 'student_id' => 'required',
-                'date_time_late'=>'required',
-                'information'=>'required',
-                'bukti'=>'required',
+                'date_time_late' => 'required',
+                'information' => 'required',
+                'bukti' => 'required',
             ]);
 
-            if($validator->fails()){
+            if ($validator->fails()) {
                 return redirect()->back()->withErrors($validator->errors())->withInput($request->all());
             }
             $data = $validator->validated();
@@ -108,5 +130,13 @@ class LateController extends Controller
             Log::debug('LateController destroy() ' . $e->getMessage());
             return redirect()->back()->with('error', $e->getMessage());
         }
+    }
+
+    public function rekapitulasi()
+    {
+        $data['title'] = 'Daftar Late';
+        $data['student'] = Student::all();
+        $data['page'] = 'rekapitulasi-data';
+        return view('pages.late.rekapitulasi', $data);
     }
 }

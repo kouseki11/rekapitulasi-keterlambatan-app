@@ -10,7 +10,7 @@
         <p>{{ session('error') }}</p>
     </div>
 @endif
-<form action="{{ route('late.store') }}" method="post">
+<form action="{{ route('late.store') }}" method="post" enctype="multipart/form-data">
     @csrf
     <div class="card">
         <div class="card-body">
@@ -32,7 +32,7 @@
                 <div class="col">
                     <div class="mb-3">
                         <label for="date_time_late" class="form-label">Date Late <span class="text-danger">*</span></label>
-                        <input type="date" class="form-control @error('date_time_late') is-invalid @enderror" name="date_time_late" id="date_time_late" placeholder="Masukkan date_time_late" value="{{ old('date_time_late') }}">
+                        <input type="datetime-local" class="form-control @error('date_time_late') is-invalid @enderror" name="date_time_late" id="date_time_late" placeholder="Masukkan date_time_late" value="{{ old('date_time_late') }}">
                         @error('date_time_late')<span class="text-danger d-block">{{ $message }}</span>@enderror
                     </div>
                 </div>

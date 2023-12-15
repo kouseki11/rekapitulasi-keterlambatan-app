@@ -18,7 +18,7 @@
                     <li class=" <?= $page == 'user' ? 'active' : '' ?>"><a class="nav-link" href="/user"><i class="fa-solid fa-user"></i> <span>Data User</span></a></li>
                     <li class=" <?= $page == 'rayon' ? 'active' : '' ?>"><a class="nav-link" href="/rayon"><i class="fa-solid fa-book"></i> <span>Data Rayon</span></a></li>
                     <li class=" <?= $page == 'rombel' ? 'active' : '' ?>"><a class="nav-link" href="/rombel"><i class="fa-solid fa-computer"></i> <span>Data Rombel</span></a></li>
-                    <li class=" <?= $page == 'student' ? 'active' : '' ?>"><a class="nav-link" href="/student"><i class="fa-solid fa-computer"></i> <span>Data Student</span></a></li>
+                    <li class=" <?= $page == 'student' ? 'active' : '' ?>"><a class="nav-link" href="/student"><i class="fa-solid fa-address-card"></i> <span>Data Student</span></a></li>
                 </ul>
             </li>
             <li><a class="nav-link <?= $page == 'late' ? 'active' : '' ?>" href="/late"><i class="fa-solid fa-user-cog"></i> <span>Late</span></a></li>

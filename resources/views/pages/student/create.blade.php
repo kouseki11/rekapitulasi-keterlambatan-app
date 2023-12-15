@@ -60,7 +60,6 @@
                 </div>
             </div>
 
-            </div>
             <div class="d-flex justify-content-end">
                 <button class="btn btn-primary">Simpan</button>
             </div>

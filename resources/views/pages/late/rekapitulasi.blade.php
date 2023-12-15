@@ -28,19 +28,20 @@
                     <thead class="bg-light">
                         <tr>
                             <th class="text-nowrap" style="width:50px">No</th>
+                            <th class="text-nowrap">NIS</th>
                             <th class="text-nowrap">Nama</th>
-                            <th class="text-nowrap">Tanggal</th>
-                            <th class="text-nowrap">Informasi</th>
-                            <th class="text-nowrap" style="width: 100px">Tindakan</th>
+                            <th class="text-nowrap">Jumlah keterlambatan</th>
+                            <th class="text-nowrap"></th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($late as $item)
+                        @foreach ($student as $item)
                             <tr>
                                 <td class="text-nowrap">{{ $loop->iteration }}</td>
-                                <td class="text-nowrap">{{ $item->student->nis }} {{ $item->student->name }}</td>
-                                <td class="text-nowrap text-truncate" style="max-width:300px">{{ $item->date_time_late }}</td>
-                                <td class="text-nowrap text-truncate" style="max-width:300px">{{ $item->information }}</td>
+                                <td class="text-nowrap">{{ $item->nis }}</td>
+                                <td class="text-nowrap text-truncate" style="max-width:300px">{{ $item->name }}</td>
+                                <td class="text-nowrap text-truncate" style="max-width:300px">{{ $item->late->count() }}</td>
+                                <td class="text-nowrap text-truncate" style="max-width:300px"><a href="{{ route('late.show', $item->id) }}">Lihat</a></td>
                                 {{-- @if ($item->bukti)
                                 <td class="text-nowrap text-truncate" style="max-width:300px">
                                     <img src="{{ asset('images/bukti_images/' . $item->bukti) }}" alt="Bukti Image"
@@ -48,18 +49,6 @@
                                 @else
                                 <td class="text-nowrap text-truncate" style="max-width:300px">No Image Available</td>
                                 @endif --}}
-                                <td class="text-nowrap">
-                                    <div class="d-flex">
-                                        <a href="{{ route('late.edit', $item->id) }}" class="btn btn-warning me-2">Edit</a>
-                                        <form action="{{ route('late.destroy', $item->id) }}" method="post"
-                                            id="delete_form{{ $item->id }}">
-                                            @csrf
-                                            @method('delete')
-                                            <button type="button" class="btn btn-danger"
-                                                onclick="delete_item('delete_form{{ $item->id }}')">Hapus</button>
-                                        </form>
-                                    </div>
-                                </td>
                             </tr>
                         @endforeach
                     </tbody>

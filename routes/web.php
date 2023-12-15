@@ -43,6 +43,7 @@ Route::resources([
     'late'=>LateController::class
 ]);
 
+Route::get('/rekapitulasi-data', [LateController::class, 'rekapitulasi'])->name('rekapitulasi');
 Route::get('/login', [LoginController::class, 'index'])->name('login');
 Route::post('/login', [LoginController::class, 'auth'])->name('login.auth');
 Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
